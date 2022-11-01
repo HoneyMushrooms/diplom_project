@@ -1,16 +1,22 @@
-// подключение express, cors, mongoose
+// Подключение express, cors, mongoose
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-// создаем объект приложения
+// Создаем объект приложения
 const app = express();
+// Dotenv — загружает переменные среды из файла в process.env, config прочитает ваш файл, разберет содержимое, назначит его process.env
 require("dotenv").config();
 
+// Безопасность 
 app.use(cors());
+// Анализирует входящие запросы JSON
 app.use(express.json());
 
+// Подключение бд
 mongoose.connect(process.env.MONGO_URL, {
+
+  // Устраняет предупреждения об устаревании
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(()=>{
@@ -19,6 +25,8 @@ mongoose.connect(process.env.MONGO_URL, {
   console.log(err.message);
 })
 
-const server = app.listen(process.env.PORT, () =>
-  console.log(`Server started on ${process.env.PORT}`)
-);
+// Для привязки и прослушивания подключений на указанном узле и порту
+const server = app.listen(process.env.PORT, function(err){
+  if (err) console.log("Error in server setup")
+  console.log("Server listening on Port", process.env.PORT);
+});
