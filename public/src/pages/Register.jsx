@@ -23,6 +23,7 @@ function Register() {
     draggable: true,
     theme: "dark",
   };
+  
   const [values, setValues] = useState({
     username: "",
     email: "",
@@ -31,11 +32,11 @@ function Register() {
   })
 
   const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.name});
+    setValues({ ...values, [event.target.name]: event.target.value});
   }
 
   const handleValidation = () => {
-    const { password, confirmPassword, username, email } = values;
+    const {password, confirmPassword, username, email} = values;
     if (password !== confirmPassword) {
       toast.error(
         "Password and confirm password should be same.",
@@ -87,7 +88,7 @@ function Register() {
           <input type='text' placeholder='Username' name='username' onChange={e=>handleChange(e)}/>
           <input type='email' placeholder='Email' name='email' onChange={e=>handleChange(e)}/>
           <input type='password' placeholder='Password' name='password' onChange={e=>handleChange(e)}/>
-          <input type='password' placeholder='Confirm Password' name='confirm password' onChange={e=>handleChange(e)}/>
+          <input type='password' placeholder='Confirm Password' name='confirmPassword' onChange={e=>handleChange(e)}/>
 
           <button type='submit'>Create User</button>
           <span>
