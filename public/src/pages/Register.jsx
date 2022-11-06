@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+
 
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
@@ -63,9 +65,7 @@ function Register() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    handleValidation();
-
+    event.preventDefault(); // надо почитать
     // if (handleValidation()) {
     //   const { email, username, password } = values;
     //   const { data } = await axios.post(registerRoute, {

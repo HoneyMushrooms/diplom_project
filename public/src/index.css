@@ -15,3 +15,11 @@ body {
     max-height: 100vh;
     overflow: hidden;
 }
+
+.Toastify__progress-bar--error {
+    background: #0F6FC5  !important;
+} 
+
+:root {
+    --toastify-icon-color-error: #0F6FC5  !important;
+}

@@ -9,13 +9,12 @@ function Login() {
 
   const toastOptions = {
     position: "bottom-right",
-    autoClose: 1111111111111,
+    autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
     draggable: true,
     theme: "light",
-    line: "red",
   };
 
   const [values, setValues] = useState({
@@ -27,36 +26,22 @@ function Login() {
     setValues({ ...values, [event.target.name]: event.target.value});
   }
 
-  // const handleValidation = () => {
-  //   const {login, password} = values;
-  //   if (password !== confirmPassword) {
-  //     toast.error(
-  //       "Password and confirm password should be same.",
-  //       toastOptions
-  //     );  
-  //     return false;
-  //   } else if (username.length < 3) {
-  //     toast.error(
-  //       "Username should be greater than 3 characters.",
-  //       toastOptions
-  //     );
-  //     return false;
-  //   } else if (password.length < 8) {
-  //     toast.error(
-  //       "Password should be equal or greater than 8 characters.",
-  //       toastOptions
-  //     );
-  //     return false;
-  //   } else if (email === "") {
-  //     toast.error("Email is required.", toastOptions);
-  //     return false;
-  //   }
-  //   return true;
-  // };
+  const handleValidation = () => {
+    const {login, password} = values;
+    if(login === "" || password  === "" ){
+      toast.error("Заполните пустые поля", toastOptions)
+      return false;
+    }
+    // else if (password  !== ldap_password){
+    //   toast.error("Неверный пароль", toastOptions)
+    //   return false;
+    // }
+    return true;
+  };
 
   const handleSubmit = (event)=> {
     event.preventDefault();
-    toast("", toastOptions);
+    handleValidation();
   };
 
   return (
