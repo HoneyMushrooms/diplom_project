@@ -5,16 +5,8 @@ import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { registerRoute } from "../utils/APIRoutes";
 
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import styled from "styled-components";
-// import { useNavigate, Link } from "react-router-dom";
-// import Logo from "../assets/logo.svg";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { registerRoute } from "../utils/APIRoutes";
 
 function Register() {
   
@@ -66,14 +58,16 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // надо почитать
-    // if (handleValidation()) {
-    //   const { email, username, password } = values;
-    //   const { data } = await axios.post(registerRoute, {
-    //     username,
-    //     email,
-    //     password,
-    //   });
-    // }
+    if (handleValidation()) {
+      console.log(1)
+      const { email, username, password } = values;
+      const { data } = await axios.post(registerRoute, {
+        username,
+        email,
+        password,
+      });
+    }
+    console.log(1)
   }
 
   return (

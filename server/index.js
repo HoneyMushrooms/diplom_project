@@ -2,7 +2,8 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const userRoutes = require("./routes/userRoutes");
+console.log('g')
 // Создаем объект приложения
 const app = express();
 // Dotenv — загружает переменные среды из файла в process.env, config прочитает ваш файл, разберет содержимое, назначит его process.env
@@ -12,10 +13,10 @@ require("dotenv").config();
 app.use(cors());
 // Анализирует входящие запросы JSON
 app.use(express.json());
-
+app.use("/api/auth", userRoutes);
+console.log('s')
 // Подключение бд
 mongoose.connect(process.env.MONGO_URL, {
-
   // Устраняет предупреждения об устаревании
   useNewUrlParser: true,
   useUnifiedTopology: true,
