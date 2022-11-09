@@ -1,6 +1,6 @@
 const host = "http://localhost:5000";
 export const registerRoute = `${host}/api/auth/register`;
-console.log(4)
+
 // export const loginRoute = `${host}/api/auth/login`;
 // export const logoutRoute = `${host}/api/auth/logout`;
 // export const allUsersRoute = `${host}/api/auth/allusers`;

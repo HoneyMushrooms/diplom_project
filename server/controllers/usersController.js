@@ -1,5 +1,4 @@
-console.log(3)
-
 module.exports.register = (req, res, next) => {
-    console.log(req.body)
+    const {email, password, username} = req.body
+    const usernameCheck = await 
 }

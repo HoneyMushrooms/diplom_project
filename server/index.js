@@ -7,7 +7,6 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 // Dotenv — загружает переменные среды из файла в process.env, config прочитает ваш файл, разберет содержимое, назначит его process.env
 require("dotenv").config();
-console.log(1)
 // Безопасность 
 app.use(cors());
 // Анализирует входящие запросы JSON
@@ -15,10 +14,6 @@ app.use(express.json());
 // Эта функция выполняется для всех типов запросов HTTP в пути /api/auth
 
 app.use("/api/auth", userRoutes);
-
-// app.post("/api/auth/register", (req, res, next) => {
-//   console.log(req.body)
-// })
 
 // Подключение бд
 mongoose.connect(process.env.MONGO_URL, {
