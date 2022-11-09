@@ -1,7 +1,9 @@
 const { register } = require("../controllers/usersController");
-console.log('b')
+
+// Объекты Router позволяют вам ограничить использование middleware определенным набором маршрутов
 const router = require("express").Router();
-console.log('c')
-router.post("/register", register);
-console.log('d')
+console.log(2)
+
+router.post("/register", register)
+
 module.exports = router;
