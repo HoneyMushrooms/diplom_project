@@ -27,6 +27,10 @@ function Register() {
     confirmPassword: "",
   })
 
+  useEffect(()=>{
+    if(localStorage.getItem("chat-app-user")) navigate("/")
+  })
+
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value});
   }
@@ -59,7 +63,7 @@ function Register() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // надо почитать
+    event.preventDefault();
     if (handleValidation()) {
       const { email, username, password } = values;
       const { data } = await axios.post(registerRoute, {
@@ -67,13 +71,13 @@ function Register() {
         email,
         password,
       });
-
+      //process.env.REACT_APP_LOCALHOST_KEY
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
       if (data.status === true) {
         localStorage.setItem(
-          process.env.REACT_APP_LOCALHOST_KEY,
+          "chat-app-user",
           JSON.stringify(data.user)
         );
         navigate("/");

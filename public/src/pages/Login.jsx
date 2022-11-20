@@ -1,25 +1,32 @@
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {Link, useNavigate} from "react-router-dom";
 import styled from "styled-components";
-import Logo from "../assets/logo_chat1.svg";
+import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { loginRoute } from "../utils/APIRoutes";
+
 
 function Login() {
+  
+  const navigate = useNavigate();
 
   const toastOptions = {
     position: "bottom-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
+    autoClose: 8000,
     pauseOnHover: true,
     draggable: true,
-    theme: "light",
+    theme: "dark",
   };
-
+  
   const [values, setValues] = useState({
-    login: "",
+    username: "",
     password: "",
+  })
+
+  useEffect(()=>{
+    if(localStorage.getItem("chat-app-user")) navigate("/")
   })
 
   const handleChange = (event) => {
@@ -27,43 +34,73 @@ function Login() {
   }
 
   const handleValidation = () => {
-    const {login, password} = values;
-    if(login === "" || password  === "" ){
-      toast.error("Заполните пустые поля", toastOptions)
+    const {password, username} = values;
+    if (password === "") {
+      toast.error("Error",toastOptions);  
       return false;
-    }
-    // else if (password  !== ldap_password){
-    //   toast.error("Неверный пароль", toastOptions)
-    //   return false;
-    // }
+    } else if (username.length === "") {
+      toast.error("Error", toastOptions);
+      return false;
+    } 
+
     return true;
   };
 
-  const handleSubmit = (event)=> {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    handleValidation();
-  };
+    if (handleValidation()) {
+      const { username, password } = values;
+      const { data } = await axios.post(loginRoute, {
+        username,
+        password,
+      });
+      //process.env.REACT_APP_LOCALHOST_KEY
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+      if (data.status === true) {
+        localStorage.setItem(
+          "chat-app-user",
+          JSON.stringify(data.user)
+        );
+        navigate("/");
+      }
+    }
+  }
 
   return (
     <>
-      <FormContainer>
-        <form onSubmit={(event)=>handleSubmit(event)}>
-          <div className='brand'>
-            <img src={Logo} alt='Logo'/>
-          </div>
-          <hr/>
-          <input type='number' placeholder='Логин' name='login' onChange={e=>handleChange(e)}/>
-          <input type='password' placeholder='Пароль' name='password' onChange={e=>handleChange(e)}/>
-
-          <button type='submit'>Вход</button>
-        </form>
-      </FormContainer>
-      <ToastContainer/>
-    </>
+    <FormContainer>
+      <form action="" onSubmit={(event) => handleSubmit(event)}>
+        <div className="brand">
+          <img src={Logo} alt="logo" />
+          <h1>snappy</h1>
+        </div>
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          onChange={(e) => handleChange(e)}
+          //min="3"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          onChange={(e) => handleChange(e)}
+        />
+        <button type="submit">Log In</button>
+        <span>
+          Don't have an account ? <Link to="/register">Create One.</Link>
+        </span>
+      </form>
+    </FormContainer>
+    <ToastContainer />
+  </>
   );
 }
 
-const FormContainer = styled.div` 
+const FormContainer = styled.div`
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -71,40 +108,43 @@ const FormContainer = styled.div`
   justify-content: center;
   gap: 1rem;
   align-items: center;
-  hr {
-    border: none;
-    border-top: 0.13rem solid #778899;
-  }
+  background-color: #131324;
   .brand {
-    background-color: white;
     display: flex;
     align-items: center;
     gap: 1rem;
     justify-content: center;
     img {
-      height: 7rem;
-      margin-bottom: 10px;
+      height: 5rem;
+    }
+    h1 {
+      color: white;
+      text-transform: uppercase;
     }
   }
   form {
-    background-color: white;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    border: 0.15rem solid #778899;
+    background-color: #00000076;
     border-radius: 2rem;
-    padding: 2rem 3rem 1.9rem 3rem;
+    padding: 5rem;
   }
   input {
-    backgound-color: #E8F0FE;
+    background-color: transparent;
     padding: 1rem;
-    border: 0.14rem solid #778899;
+    border: 0.1rem solid #4e0eff;
     border-radius: 0.4rem;
+    color: white;
     width: 100%;
     font-size: 1rem;
+    &:focus {
+      border: 0.1rem solid #997af0;
+      outline: none;
+    }
   }
   button {
-    background-color: #0F6FC5;
+    background-color: #4e0eff;
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -114,16 +154,17 @@ const FormContainer = styled.div`
     font-size: 1rem;
     text-transform: uppercase;
     &:hover {
-      background-color: #00416A;
+      background-color: #4e0eff;
     }
   }
-  input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-
-}
+  span {
+    color: white;
+    text-transform: uppercase;
+    a {
+      color: #4e0eff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  }
 `;
-
 export default Login;
-
-

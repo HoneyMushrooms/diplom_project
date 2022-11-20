@@ -11,8 +11,8 @@ require("dotenv").config();
 app.use(cors());
 // Анализирует входящие запросы JSON
 app.use(express.json());
-// Эта функция выполняется для всех типов запросов HTTP в пути /api/auth
 
+// Эта функция выполняется для всех типов запросов HTTP в пути /api/auth
 app.use("/api/auth", userRoutes);
 
 // Подключение бд
